@@ -87,16 +87,35 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ukh-Q7-aFW" userLabel="Task Complete View">
-                                <rect key="frame" x="20" y="429.66666666666669" width="353" height="180.66666666666669"/>
+                                <rect key="frame" x="20" y="429.66666666666674" width="353" height="176"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u1P-Ba-Jdc" userLabel="Task Complete Container">
-                                        <rect key="frame" x="0.0" y="0.0" width="353" height="180.66666666666666"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="19" translatesAutoresizingMaskIntoConstraints="NO" id="u1P-Ba-Jdc" userLabel="Task Complete Container">
+                                        <rect key="frame" x="0.0" y="0.0" width="353" height="176"/>
                                         <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VJW-m8-ctY" customClass="CircularProgressView" customModule="PersonalGISTPlanner" customModuleProvider="target">
+                                                <rect key="frame" x="30" y="28" width="120" height="120"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="120" id="Fyj-ur-WuQ"/>
+                                                    <constraint firstAttribute="height" constant="120" id="IhS-le-eT0"/>
+                                                </constraints>
+                                                <edgeInsets key="layoutMargins" top="28" left="30" bottom="28" right="8"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                                        <real key="value" value="0.10000000000000001"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                                        <size key="value" width="0.0" height="4"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                                        <integer key="value" value="4"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Nf8-bO-1kX">
-                                                <rect key="frame" x="0.0" y="0.0" width="353" height="180.66666666666666"/>
+                                                <rect key="frame" x="169" y="49.666666666666636" width="154" height="76.666666666666686"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="lastBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="Y2T-3V-xnV">
-                                                        <rect key="frame" x="30" y="52" width="293" height="50.333333333333343"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y2T-3V-xnV">
+                                                        <rect key="frame" x="0.0" y="0.0" width="154" height="50.333333333333336"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="5/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YUG-Lm-o9i">
                                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="50.333333333333336"/>
@@ -105,7 +124,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kwF-bF-uHW">
-                                                                <rect key="frame" x="40" y="19" width="253" height="26.333333333333329"/>
+                                                                <rect key="frame" x="40" y="0.0" width="114" height="50.333333333333336"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -113,15 +132,20 @@
                                                         </subviews>
                                                     </stackView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Task Completed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7eg-dl-mok">
-                                                        <rect key="frame" x="30" y="102.33333333333331" width="293" height="26.333333333333343"/>
+                                                        <rect key="frame" x="0.0" y="50.333333333333314" width="154" height="26.333333333333329"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <edgeInsets key="layoutMargins" top="52" left="30" bottom="52" right="30"/>
+                                                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                             </stackView>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Nf8-bO-1kX" firstAttribute="leading" secondItem="VJW-m8-ctY" secondAttribute="trailing" constant="19" id="LVV-Ho-cdF"/>
+                                            <constraint firstItem="Nf8-bO-1kX" firstAttribute="leading" secondItem="VJW-m8-ctY" secondAttribute="trailing" constant="19" id="jgO-xs-MCe"/>
+                                        </constraints>
+                                        <edgeInsets key="layoutMargins" top="28" left="30" bottom="28" right="30"/>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" name="lightBlueAccent"/>
@@ -154,6 +178,7 @@
                     </view>
                     <connections>
                         <outlet property="goalActiveView" destination="pC5-g8-i3W" id="QA5-a0-BbO"/>
+                        <outlet property="taskCompleteProgress" destination="VJW-m8-ctY" id="nPV-oq-mO7"/>
                         <outlet property="taskCompleteView" destination="ukh-Q7-aFW" id="wja-0L-QKV"/>
                     </connections>
                 </viewController>

@@ -11,6 +11,7 @@ import UIKit
 class DashboardViewController: UIViewController {
     @IBOutlet var goalActiveView: UIView!
     @IBOutlet var taskCompleteView: UIView!
+    @IBOutlet var taskCompleteProgress: CircularProgressView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,5 +23,7 @@ class DashboardViewController: UIViewController {
         goalActiveView.layer.borderColor = UIColor.blueAccent.cgColor
         taskCompleteView.layer.borderWidth = 1
         taskCompleteView.layer.borderColor = UIColor.blueAccent.cgColor
+
+        taskCompleteProgress.setProgress(0.75)
     }
 }
