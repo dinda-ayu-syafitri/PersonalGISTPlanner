@@ -8,15 +8,33 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
-
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+
+        window = UIWindow(windowScene: windowScene)
+
+        let splashVC = UIStoryboard(name: "SplashScreen", bundle: nil).instantiateViewController(withIdentifier: "SplashScreenView")
+
+        window?.rootViewController = splashVC
+        window?.makeKeyAndVisible()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            let tabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as! UITabBarController
+
+            let dashboardVC = UIStoryboard(name: "DashboardView", bundle: nil).instantiateViewController(withIdentifier: "DashboardView")
+            dashboardVC.tabBarItem = UITabBarItem(title: "Dashboard", image: UIImage(systemName: "house.fill"), tag: 1)
+            tabBarController.viewControllers = [dashboardVC]
+
+            UIView.transition(with: self.window!, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                self.window?.rootViewController = tabBarController
+            })
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -46,7 +64,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
-
