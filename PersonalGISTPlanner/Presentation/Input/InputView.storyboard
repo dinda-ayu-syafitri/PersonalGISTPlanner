@@ -9,16 +9,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Input View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="InputView" id="Y6W-OH-hqX" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InputView" id="Y6W-OH-hqX" customClass="InputViewController" customModule="PersonalGISTPlanner" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="UDc-iG-dLL">
-                                <rect key="frame" x="0.0" y="83" width="393" height="528.33333333333337"/>
+                                <rect key="frame" x="0.0" y="127" width="393" height="528.33333333333337"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="o8e-Ze-bHa">
                                         <rect key="frame" x="20" y="8.0000000000000036" width="353" height="62.333333333333343"/>
@@ -30,7 +30,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Coj-ZP-SEQ">
-                                                <rect key="frame" x="0.0" y="28.333333333333329" width="353" height="34"/>
+                                                <rect key="frame" x="0.0" y="28.333333333333343" width="353" height="34"/>
                                                 <color key="backgroundColor" name="lightBlueAccent"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
@@ -110,16 +110,16 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kln-Pf-aTu">
-                                                <rect key="frame" x="0.0" y="28.333333333333314" width="353" height="45"/>
+                                                <rect key="frame" x="0.0" y="28.333333333333371" width="353" height="45"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25 May 2025" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e1q-z8-7rN">
-                                                        <rect key="frame" x="26.000000000000007" y="12.333333333333369" width="100.66666666666669" height="20.333333333333329"/>
+                                                        <rect key="frame" x="26.000000000000007" y="12.333333333333256" width="100.66666666666669" height="20.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="1Wk-Z7-Wbe">
-                                                        <rect key="frame" x="314.33333333333331" y="13.666666666666684" width="12.666666666666686" height="18.333333333333329"/>
+                                                        <rect key="frame" x="314.33333333333331" y="13.666666666666627" width="12.666666666666686" height="18.333333333333329"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="22" id="TWt-QG-Ik7"/>
                                                         </constraints>
@@ -163,10 +163,32 @@
                             <constraint firstItem="UDc-iG-dLL" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="cc9-AM-fwW"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Gf7-la-qGH"/>
+                    <connections>
+                        <outlet property="submitButton" destination="zS5-J0-O57" id="Saz-8h-rbn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="76" y="-28"/>
+            <point key="canvasLocation" x="1929.0076335877861" y="-28.169014084507044"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="3B8-3H-bAy">
+            <objects>
+                <navigationController storyboardIdentifier="InputNavView" automaticallyAdjustsScrollViewInsets="NO" id="1RW-Sn-nYQ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ru6-Pi-abe">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="hYU-Oe-ZQj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xIB-tg-3TE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1002.2900763358779" y="-28.169014084507044"/>
         </scene>
     </scenes>
     <resources>

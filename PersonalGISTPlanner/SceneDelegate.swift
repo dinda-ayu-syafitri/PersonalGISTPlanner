@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let dashboardVC = UIStoryboard(name: "DashboardView", bundle: nil).instantiateViewController(withIdentifier: "DashboardView")
             dashboardVC.tabBarItem = UITabBarItem(title: "Dashboard", image: UIImage(systemName: "house.fill"), tag: 1)
 
-            let inputVC = UIStoryboard(name: "InputView", bundle: nil).instantiateViewController(withIdentifier: "InputView")
+            let inputVC = UIStoryboard(name: "InputView", bundle: nil).instantiateViewController(withIdentifier: "InputNavView")
             inputVC.tabBarItem = UITabBarItem(title: "Add", image: UIImage(systemName: "plus.square.fill"), tag: 2)
 
             tabBarController.viewControllers = [dashboardVC, inputVC]
