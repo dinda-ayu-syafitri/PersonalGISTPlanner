@@ -48,4 +48,11 @@ class InputPlacementViewController: UIViewController, UITableViewDelegate, UITab
 
         return cell
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let categoryView = UIStoryboard(name: "InputSelectionView", bundle: nil)
+        if let targetVC = categoryView.instantiateViewController(withIdentifier: "ItemSelectionView") as? InputSelectionViewController {
+            navigationController?.pushViewController(targetVC, animated: true)
+        }
+    }
 }
