@@ -42,6 +42,14 @@ class CategorySelectionViewController: UIViewController, UITableViewDelegate, UI
         }
 
         cell.contentConfiguration = content
+
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let categoryView = UIStoryboard(name: "InputPlacementView", bundle: nil)
+        if let targetVC = categoryView.instantiateViewController(withIdentifier: "InputPlacementView") as? InputPlacementViewController {
+            navigationController?.pushViewController(targetVC, animated: true)
+        }
     }
 }
