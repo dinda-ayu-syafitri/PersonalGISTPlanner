@@ -33,7 +33,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let inputVC = UIStoryboard(name: "InputView", bundle: nil).instantiateViewController(withIdentifier: "InputNavView")
             inputVC.tabBarItem = UITabBarItem(title: "Add", image: UIImage(systemName: "plus.square.fill"), tag: 2)
 
-            tabBarController.viewControllers = [dashboardVC, inputVC]
+            let goalsVC = UIStoryboard(name: "GoalsView", bundle: nil).instantiateViewController(withIdentifier: "GoalsNavView")
+            goalsVC.tabBarItem = UITabBarItem(title: "Goals", image: UIImage(systemName: "target"), tag: 3)
+
+            tabBarController.viewControllers = [dashboardVC, inputVC, goalsVC]
 
             UIView.transition(with: self.window!, duration: 0.5, options: .transitionCrossDissolve, animations: {
                 self.window?.rootViewController = tabBarController

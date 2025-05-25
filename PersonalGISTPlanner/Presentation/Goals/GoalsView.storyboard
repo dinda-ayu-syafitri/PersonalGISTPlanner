@@ -1,28 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Goal View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GoalsView" id="Y6W-OH-hqX" customClass="GoalViewController" customModule="PersonalGISTPlanner" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tAk-tQ-8RH">
+                                <rect key="frame" x="0.0" y="123" width="393" height="56"/>
+                                <subviews>
+                                    <searchBar contentMode="scaleToFill" searchBarStyle="minimal" text="" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="C3x-jb-3n3">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="56"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="wm4-Vz-btB"/>
+                                        </constraints>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <scopeButtonTitles>
+                                            <string>Title</string>
+                                            <string>Title</string>
+                                        </scopeButtonTitles>
+                                        <connections>
+                                            <outlet property="delegate" destination="Y6W-OH-hqX" id="M2U-0R-JDb"/>
+                                        </connections>
+                                    </searchBar>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u38-i4-aOY">
+                                        <rect key="frame" x="300" y="0.0" width="93" height="56"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="line.3.horizontal.decrease.circle.fill" catalog="system"/>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="C3x-jb-3n3" firstAttribute="leading" secondItem="tAk-tQ-8RH" secondAttribute="leading" id="NlO-SR-haR"/>
+                                    <constraint firstItem="C3x-jb-3n3" firstAttribute="centerY" secondItem="tAk-tQ-8RH" secondAttribute="centerY" id="u8W-bS-SGk"/>
+                                    <constraint firstAttribute="trailing" secondItem="u38-i4-aOY" secondAttribute="trailing" id="uBZ-Vz-qcu"/>
+                                    <constraint firstItem="u38-i4-aOY" firstAttribute="centerY" secondItem="tAk-tQ-8RH" secondAttribute="centerY" id="yVz-Hv-efU"/>
+                                </constraints>
+                            </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="G4v-tT-d2F">
+                                <rect key="frame" x="20" y="209" width="353" height="609"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="sectionIndexColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="goalItemCell" id="szN-h6-W7u" customClass="GoalItemCell" customModule="PersonalGISTPlanner" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="353" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="szN-h6-W7u" id="Sb8-dH-ny9">
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="01K-v6-5wj">
+                                                    <rect key="frame" x="15" y="20" width="323" height="20.333333333333329"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Nuw-zb-2fv">
+                                                    <rect key="frame" x="15" y="50.333333333333336" width="323" height="4"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="progressTintColor" name="blueAccent"/>
+                                                    <color key="trackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </progressView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="10 / 20 Task Complete" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TZo-38-OTv">
+                                                    <rect key="frame" x="155" y="11.333333333333258" width="126" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="progressText" destination="TZo-38-OTv" id="f19-Ec-gEl"/>
+                                            <outlet property="progressView" destination="Nuw-zb-2fv" id="bET-0M-SPi"/>
+                                            <outlet property="title" destination="01K-v6-5wj" id="s2M-n7-sPu"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="tAk-tQ-8RH" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="I8c-yX-zUl"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="G4v-tT-d2F" secondAttribute="trailing" constant="20" id="Kfz-v0-5vY"/>
+                            <constraint firstItem="tAk-tQ-8RH" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="RXu-Q7-vZA"/>
+                            <constraint firstItem="G4v-tT-d2F" firstAttribute="top" secondItem="tAk-tQ-8RH" secondAttribute="bottom" constant="30" id="Uid-fk-F0n"/>
+                            <constraint firstItem="tAk-tQ-8RH" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="20" id="a0r-yw-jVG"/>
+                            <constraint firstItem="tAk-tQ-8RH" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="lTE-XZ-ANE"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="G4v-tT-d2F" secondAttribute="bottom" id="ty0-1N-BvH"/>
+                            <constraint firstItem="G4v-tT-d2F" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" constant="20" id="yZH-kD-T96"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="JpB-e3-uTv"/>
+                    <connections>
+                        <outlet property="goalTableView" destination="G4v-tT-d2F" id="a5u-kH-Fdw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="970.2290076335878" y="-17.605633802816904"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="N44-ww-I8r">
+            <objects>
+                <navigationController storyboardIdentifier="GoalsNavView" automaticallyAdjustsScrollViewInsets="NO" id="xC0-5h-HuZ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="rdO-rX-ab5">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="Wdj-Nh-9cd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="91O-oh-Fpd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="43.511450381679388" y="-17.605633802816904"/>
         </scene>
     </scenes>
     <resources>
+        <image name="line.3.horizontal.decrease.circle.fill" catalog="system" width="128" height="123"/>
+        <namedColor name="blueAccent">
+            <color red="0.078431372549019607" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
