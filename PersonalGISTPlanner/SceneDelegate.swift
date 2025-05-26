@@ -36,7 +36,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let goalsVC = UIStoryboard(name: "GoalsView", bundle: nil).instantiateViewController(withIdentifier: "GoalsNavView")
             goalsVC.tabBarItem = UITabBarItem(title: "Goals", image: UIImage(systemName: "target"), tag: 3)
 
-            tabBarController.viewControllers = [dashboardVC, inputVC, goalsVC]
+            let planBasketVC = UIStoryboard(name: "PlanBasketView", bundle: nil).instantiateViewController(withIdentifier: "PlanBasketNavView")
+            planBasketVC.tabBarItem = UITabBarItem(title: "Plan Basket", image: UIImage(systemName: "basket.fill"), tag: 4)
+
+            tabBarController.viewControllers = [dashboardVC, inputVC, goalsVC, planBasketVC]
 
             UIView.transition(with: self.window!, duration: 0.5, options: .transitionCrossDissolve, animations: {
                 self.window?.rootViewController = tabBarController
