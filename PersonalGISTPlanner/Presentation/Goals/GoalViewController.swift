@@ -150,4 +150,11 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         return swipeConfiguration
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let itemView = UIStoryboard(name: "CategorizedListView", bundle: nil)
+        if let targetVC = itemView.instantiateViewController(withIdentifier: "CategorizedListView") as? CategorizedListViewController {
+            navigationController?.pushViewController(targetVC, animated: true)
+        }
+    }
 }
