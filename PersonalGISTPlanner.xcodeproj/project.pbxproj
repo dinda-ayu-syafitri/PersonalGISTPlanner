@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		20D975042DE425EF0007E5EC /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 20D975032DE425EF0007E5EC /* Realm */; };
+		20D975062DE425EF0007E5EC /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 20D975052DE425EF0007E5EC /* RealmSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		20A6623B2DD8963000ED943D /* PersonalGISTPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalGISTPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20D975062DE425EF0007E5EC /* RealmSwift in Frameworks */,
+				20D975042DE425EF0007E5EC /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,8 @@
 			);
 			name = PersonalGISTPlanner;
 			packageProductDependencies = (
+				20D975032DE425EF0007E5EC /* Realm */,
+				20D975052DE425EF0007E5EC /* RealmSwift */,
 			);
 			productName = PersonalGISTPlanner;
 			productReference = 20A6623B2DD8963000ED943D /* PersonalGISTPlanner.app */;
@@ -107,6 +116,9 @@
 			);
 			mainGroup = 20A662322DD8963000ED943D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				20D975022DE425EF0007E5EC /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 20A6623C2DD8963000ED943D /* Products */;
 			projectDirPath = "";
@@ -335,6 +347,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		20D975022DE425EF0007E5EC /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		20D975032DE425EF0007E5EC /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20D975022DE425EF0007E5EC /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		20D975052DE425EF0007E5EC /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20D975022DE425EF0007E5EC /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 20A662332DD8963000ED943D /* Project object */;
 }
