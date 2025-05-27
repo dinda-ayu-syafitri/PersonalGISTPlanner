@@ -193,6 +193,7 @@
                     </view>
                     <connections>
                         <outlet property="goalActiveView" destination="pC5-g8-i3W" id="QA5-a0-BbO"/>
+                        <outlet property="goalCountLabel" destination="Yz1-7G-vra" id="h2Q-uf-4b1"/>
                         <outlet property="taskCompleteProgress" destination="VJW-m8-ctY" id="nPV-oq-mO7"/>
                         <outlet property="taskCompleteView" destination="ukh-Q7-aFW" id="wja-0L-QKV"/>
                     </connections>
