@@ -10,7 +10,9 @@ import UIKit
 class CategorySelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var categoryTableView: UITableView!
 
-    let categories = ["Goals", "Ideas", "Steps", "Tasks", "Uncategorized"]
+    var onCategorySelected: ((PlanCategory) -> Void)?
+
+//    let categories = ["Goals", "Ideas", "Steps", "Tasks", "Uncategorized"]
 
     // MARK: - LIFECYCLE
 
@@ -24,18 +26,18 @@ class CategorySelectionViewController: UIViewController, UITableViewDelegate, UI
     // MARK: - TABLE VIEW
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return PlanCategory.allCases.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath)
 
         var content = cell.defaultContentConfiguration()
-        content.text = categories[indexPath.row]
+        content.text = PlanCategory.allCases[indexPath.row].rawValue
 
         if indexPath.row == 0 {
             cell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        } else if indexPath.row == categories.count - 1 {
+        } else if indexPath.row == PlanCategory.allCases.count - 1 {
             cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         } else {
             cell.layer.maskedCorners = []
@@ -47,9 +49,12 @@ class CategorySelectionViewController: UIViewController, UITableViewDelegate, UI
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let categoryView = UIStoryboard(name: "InputPlacementView", bundle: nil)
-        if let targetVC = categoryView.instantiateViewController(withIdentifier: "InputPlacementView") as? InputPlacementViewController {
-            navigationController?.pushViewController(targetVC, animated: true)
-        }
+        let selectedCategory = PlanCategory.allCases[indexPath.row]
+        onCategorySelected?(selectedCategory)
+        navigationController?.popViewController(animated: true)
+        //        let categoryView = UIStoryboard(name: "InputPlacementView", bundle: nil)
+//        if let targetVC = categoryView.instantiateViewController(withIdentifier: "InputPlacementView") as? InputPlacementViewController {
+//            navigationController?.pushViewController(targetVC, animated: true)
+//        }
     }
 }

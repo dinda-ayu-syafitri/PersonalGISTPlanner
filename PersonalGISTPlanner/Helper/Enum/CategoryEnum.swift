@@ -7,9 +7,9 @@
 import RealmSwift
 
 enum PlanCategory: String, PersistableEnum {
-    case goal
-    case idea
-    case step
-    case task
-    case none
+    case goal = "Goal"
+    case idea = "Idea"
+    case step = "Step"
+    case task = "Task"
+    case none = "Uncategorized"
 }

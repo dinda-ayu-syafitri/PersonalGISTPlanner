@@ -22,6 +22,10 @@ class DashboardViewController: UIViewController {
         updateUI()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        updateUI()
+    }
+
     private func setUpView() {
         goalActiveView.layer.borderWidth = 1
         goalActiveView.layer.borderColor = UIColor.blueAccent.cgColor
