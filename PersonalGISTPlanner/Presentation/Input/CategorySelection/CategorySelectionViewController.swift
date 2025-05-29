@@ -12,8 +12,6 @@ class CategorySelectionViewController: UIViewController, UITableViewDelegate, UI
 
     var onCategorySelected: ((PlanCategory) -> Void)?
 
-//    let categories = ["Goals", "Ideas", "Steps", "Tasks", "Uncategorized"]
-
     // MARK: - LIFECYCLE
 
     override func viewDidLoad() {
@@ -50,11 +48,17 @@ class CategorySelectionViewController: UIViewController, UITableViewDelegate, UI
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCategory = PlanCategory.allCases[indexPath.row]
-        onCategorySelected?(selectedCategory)
-        navigationController?.popViewController(animated: true)
-        //        let categoryView = UIStoryboard(name: "InputPlacementView", bundle: nil)
-//        if let targetVC = categoryView.instantiateViewController(withIdentifier: "InputPlacementView") as? InputPlacementViewController {
-//            navigationController?.pushViewController(targetVC, animated: true)
-//        }
+
+        if selectedCategory == .goal {
+            onCategorySelected?(selectedCategory)
+            navigationController?.popViewController(animated: true)
+        } else {
+            onCategorySelected?(selectedCategory)
+            let categoryView = UIStoryboard(name: "InputPlacementView", bundle: nil)
+            if let targetVC = categoryView.instantiateViewController(withIdentifier: "InputPlacementView") as? InputPlacementViewController {
+                targetVC.selectedCategory = selectedCategory
+                navigationController?.pushViewController(targetVC, animated: true)
+            }
+        }
     }
 }

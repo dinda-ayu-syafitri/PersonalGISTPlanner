@@ -15,7 +15,21 @@ class RelatedItemCell: UITableViewCell {
 class InputPlacementViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var relateditemTable: UITableView!
 
-    let relatedItem = ["Goals", "Ideas", "Steps"]
+    var selectedCategory: PlanCategory?
+    var relatedItem: [String] {
+        guard let selectedCategory = selectedCategory else {
+            return []
+        }
+
+        switch selectedCategory {
+        case .idea:
+            return ["Goals"]
+        case .step:
+            return ["Goals", "Ideas"]
+        default:
+            return ["Goals", "Ideas", "Steps"]
+        }
+    }
 
     // MARK: - LIFECYCLE
 
@@ -52,6 +66,13 @@ class InputPlacementViewController: UIViewController, UITableViewDelegate, UITab
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let categoryView = UIStoryboard(name: "InputSelectionView", bundle: nil)
         if let targetVC = categoryView.instantiateViewController(withIdentifier: "ItemSelectionView") as? InputSelectionViewController {
+            if relatedItem[indexPath.row] == "Goals" {
+                targetVC.selectedCategory = .goal
+            } else if relatedItem[indexPath.row] == "Ideas" {
+                targetVC.selectedCategory = .idea
+            } else if relatedItem[indexPath.row] == "Steps" {
+                targetVC.selectedCategory = .step
+            }
             navigationController?.pushViewController(targetVC, animated: true)
         }
     }

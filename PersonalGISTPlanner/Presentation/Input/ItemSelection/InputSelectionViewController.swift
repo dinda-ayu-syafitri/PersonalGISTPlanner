@@ -13,17 +13,23 @@ class ItemCell: UITableViewCell {
 class InputSelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var itemTable: UITableView!
 
+    var selectedCategory: PlanCategory?
+
     let items: [String] = [
         "Get a fulltime job as iOS Dev",
         "Become an expert in iOS Dev",
         "Understanding the basic of Kotlin"
     ]
 
+    // MARK: - LIFECYCLE
+
     override func viewDidLoad() {
         super.viewDidLoad()
         itemTable.dataSource = self
         itemTable.delegate = self
     }
+
+    // MARK: - TABLE CONFIG
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return items.count

@@ -19,6 +19,10 @@ class InputViewController: UIViewController {
     let viewModel = InputViewModel()
     var selectedCategory: PlanCategory = .none
     var selectedDueDate: Date?
+    var selectedGoalId: UUID?
+    var selectedIdeaId: UUID?
+    var selectedStepId: UUID?
+    var selectedTaskId: UUID?
 
     // MARK: - LIFECYCLE
 
@@ -79,7 +83,6 @@ class InputViewController: UIViewController {
     }
 
     // DATE PICKER
-
     @objc func toggleDueDatePicker() {
         dueDatePicker.isHidden.toggle()
     }
