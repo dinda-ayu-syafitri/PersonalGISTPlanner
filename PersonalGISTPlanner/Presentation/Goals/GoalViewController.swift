@@ -5,6 +5,8 @@
 //  Created by Dinda Ayu Syafitri on 23/05/25.
 //
 
+import Combine
+import RealmSwift
 import UIKit
 
 class GoalItemCell: UITableViewCell {
@@ -14,11 +16,15 @@ class GoalItemCell: UITableViewCell {
 
     let containerView = UIView()
 
+    // MARK: - LIFECYCLE
+
     override func awakeFromNib() {
         super.awakeFromNib()
         SetUpUI()
         setUpConstraint()
     }
+
+    // MARK: - SETUP
 
     func SetUpUI() {
         containerView.backgroundColor = .lightBlueAccent
@@ -72,15 +78,8 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
         "Completed Goals",
     ]
 
-    let activeItems: [String] = [
-        "Get a fulltime job as iOS Dev ",
-        "Become an expert in iOS Dev",
-        "Understanding the basic of Kotlin",
-    ]
-
-    let completedItem: [String] = [
-        "Get repeated freelance client",
-    ]
+    let viewModel = GoalsViewModel()
+    private var cancellables = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +87,28 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
         goalTableView.delegate = self
         goalTableView.rowHeight = UITableView.automaticDimension
         goalTableView.estimatedRowHeight = 100
+        setupBindings()
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        viewModel.fetchGoals()
+    }
+
+    // MARK: - SETUP
+
+    private func setupBindings() {
+        viewModel.$activeGoals
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in self?.goalTableView.reloadSections(IndexSet(integer: 0), with: .automatic) }
+            .store(in: &cancellables)
+
+        viewModel.$completedGoals
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in self?.goalTableView.reloadSections(IndexSet(integer: 1), with: .automatic) }
+            .store(in: &cancellables)
+    }
+
+    // MARK: - TABLE CONFIG
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return category.count
@@ -96,9 +116,9 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return activeItems.count
+            return viewModel.activeGoals?.count ?? 0
         } else if section == 1 {
-            return completedItem.count
+            return viewModel.completedGoals?.count ?? 0
         }
         return 0
     }
@@ -128,9 +148,9 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.title.numberOfLines = 0
 
         if indexPath.section == 0 {
-            cell.title.text = activeItems[indexPath.row]
+            cell.title.text = viewModel.activeGoals?[indexPath.row].title
         } else if indexPath.section == 1 {
-            cell.title.text = completedItem[indexPath.row]
+            cell.title.text = viewModel.completedGoals?[indexPath.row].title
         }
 
         return cell

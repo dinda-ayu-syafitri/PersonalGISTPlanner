@@ -14,7 +14,6 @@ class ItemCell: UITableViewCell {
 class InputSelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var itemTable: UITableView!
 
-    var onItemSelected: ((Any, PlanCategory) -> Void)?
     var selectedCategory: PlanCategory?
     let viewModel = ItemSelectionViewModel()
     var inputVM: InputViewModel!
@@ -85,16 +84,12 @@ class InputSelectionViewController: UIViewController, UITableViewDelegate, UITab
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let selectedItem = items?[indexPath.section] {
-//            onItemSelected?(selectedItem, selectedCategory ?? .goal)
             if selectedCategory == .goal {
                 inputVM.selectedGoal = selectedItem
-                print("Selected Goal: \(selectedItem.title)")
             } else if selectedCategory == .idea {
                 inputVM.selectedIdea = selectedItem
-                print("Selected Idea: \(selectedItem.title)")
             } else if selectedCategory == .step {
                 inputVM.selectedStep = selectedItem
-                print("Selected Step: \(selectedItem.title)")
             }
         }
         navigationController?.popViewController(animated: true)

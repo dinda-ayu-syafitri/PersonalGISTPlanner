@@ -90,23 +90,6 @@ class InputPlacementViewController: UIViewController, UITableViewDelegate, UITab
         let categoryView = UIStoryboard(name: "InputSelectionView", bundle: nil)
         if let targetVC = categoryView.instantiateViewController(withIdentifier: "ItemSelectionView") as? InputSelectionViewController {
             targetVC.inputVM = viewModel
-            targetVC.onItemSelected = { [weak self] item, category in
-                guard let self = self else { return }
-
-                switch category {
-                case .goal:
-                    viewModel.selectedGoal = item as? Plan
-                case .idea:
-                    viewModel.selectedIdea = item as? Plan
-                case .step:
-                    viewModel.selectedStep = item as? Plan
-                case .task:
-                    return
-                case .none:
-                    return
-                }
-                self.relateditemTable.reloadData()
-            }
 
             if relatedItem[indexPath.row] == "Goals" {
                 targetVC.selectedCategory = .goal
