@@ -18,5 +18,10 @@ class DashboardViewModel {
 
     func fetchPlans() {
         plans = localDataSource.getAllPlans()
+        print(plans?.count)
+    }
+
+    func clear() {
+        localDataSource.clearAllPlans()
     }
 }

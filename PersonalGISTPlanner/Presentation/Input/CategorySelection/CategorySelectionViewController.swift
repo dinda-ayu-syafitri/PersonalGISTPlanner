@@ -10,7 +10,7 @@ import UIKit
 class CategorySelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var categoryTableView: UITableView!
 
-    var onCategorySelected: ((PlanCategory) -> Void)?
+    var viewModel: InputViewModel!
 
     // MARK: - LIFECYCLE
 
@@ -50,13 +50,14 @@ class CategorySelectionViewController: UIViewController, UITableViewDelegate, UI
         let selectedCategory = PlanCategory.allCases[indexPath.row]
 
         if selectedCategory == .goal {
-            onCategorySelected?(selectedCategory)
+            viewModel.selectedCategory = selectedCategory
             navigationController?.popViewController(animated: true)
         } else {
-            onCategorySelected?(selectedCategory)
+            viewModel.selectedCategory = selectedCategory
             let categoryView = UIStoryboard(name: "InputPlacementView", bundle: nil)
             if let targetVC = categoryView.instantiateViewController(withIdentifier: "InputPlacementView") as? InputPlacementViewController {
-                targetVC.selectedCategory = selectedCategory
+                targetVC.viewModel = viewModel
+//                targetVC.selectedCategory = selectedCategory
                 navigationController?.pushViewController(targetVC, animated: true)
             }
         }

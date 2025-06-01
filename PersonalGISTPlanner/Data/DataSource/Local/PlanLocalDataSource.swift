@@ -31,4 +31,14 @@ class PlanLocalDataSource: PlanLocalDataSourceProtocol {
     func deletePlan(id: Int) {
         // TODO: Delete Plan
     }
+
+    func clearAllPlans() {
+        guard let realm = try? Realm() else { return }
+
+        try? realm.write {
+            realm.deleteAll()
+        }
+
+        print("Realm data cleared.")
+    }
 }

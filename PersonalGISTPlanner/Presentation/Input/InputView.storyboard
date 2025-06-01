@@ -198,6 +198,7 @@
                         <outlet property="categoryLabel" destination="hNZ-1e-WSA" id="fG5-7h-VEw"/>
                         <outlet property="categorySelection" destination="OqA-32-gkW" id="fbI-Xp-W7Z"/>
                         <outlet property="descInput" destination="88n-6h-oRo" id="7R7-LC-HJ6"/>
+                        <outlet property="dueDateLabel" destination="e1q-z8-7rN" id="r2q-Qf-A5P"/>
                         <outlet property="dueDatePicker" destination="lsO-xK-FKz" id="DWJ-2s-NLt"/>
                         <outlet property="dueDateView" destination="kln-Pf-aTu" id="bqz-Nh-rAW"/>
                         <outlet property="submitButton" destination="zS5-J0-O57" id="Saz-8h-rbn"/>

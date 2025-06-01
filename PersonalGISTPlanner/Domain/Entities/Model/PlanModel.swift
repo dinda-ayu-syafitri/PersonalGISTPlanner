@@ -19,5 +19,4 @@ class Plan: Object {
     @Persisted var goalId: UUID?
     @Persisted var ideaId: UUID?
     @Persisted var stepId: UUID?
-    @Persisted var taskId: UUID?
 }

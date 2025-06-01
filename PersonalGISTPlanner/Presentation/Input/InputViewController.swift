@@ -5,6 +5,7 @@
 //  Created by Dinda Ayu Syafitri on 20/05/25.
 //
 
+import Combine
 import UIKit
 
 class InputViewController: UIViewController {
@@ -14,15 +15,11 @@ class InputViewController: UIViewController {
     @IBOutlet var categorySelection: UIView!
     @IBOutlet var categoryLabel: UILabel!
     @IBOutlet var dueDateView: UIView!
+    @IBOutlet var dueDateLabel: UILabel!
     @IBOutlet var dueDatePicker: UIDatePicker!
 
     let viewModel = InputViewModel()
-    var selectedCategory: PlanCategory = .none
-    var selectedDueDate: Date?
-    var selectedGoalId: UUID?
-    var selectedIdeaId: UUID?
-    var selectedStepId: UUID?
-    var selectedTaskId: UUID?
+    var cancellables = Set<AnyCancellable>()
 
     // MARK: - LIFECYCLE
 
@@ -30,12 +27,20 @@ class InputViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupGestureRecognizers()
+
+        viewModel.objectWillChange
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.updateUI()
+            }
+            .store(in: &cancellables)
     }
 
     // MARK: - SETUP
 
     private func setupView() {
         dueDatePicker.isHidden = true
+        dueDateLabel.text = viewModel.selectedDueDate.formatted(date: .long, time: .omitted)
     }
 
     private func setupGestureRecognizers() {
@@ -52,33 +57,27 @@ class InputViewController: UIViewController {
         dueDatePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
     }
 
+    // MARK: - UPDATE
+
+    private func updateUI() {
+        dueDateLabel.text = viewModel.selectedDueDate.formatted(date: .long, time: .omitted)
+        categoryLabel.text = viewModel.selectedCategory.rawValue
+    }
+
     // MARK: - ACTION
 
     @objc func submit() {
         print("Submit")
-        let plan = Plan()
-        plan.title = titleInput.text ?? ""
-        plan.desc = descInput.text ?? ""
-        plan.dueDate = selectedDueDate ?? Date()
-        plan.category = selectedCategory
+        viewModel.title = titleInput.text ?? ""
+        viewModel.desc = descInput.text ?? ""
 
-        print("title: \(plan.title)")
-        print("desc: \(plan.desc)")
-        print("category: \(plan.category)")
-        print("Due Date: \(plan.dueDate)")
-
-        viewModel.savePlan(plan)
+        viewModel.savePlan()
     }
 
     @objc func pushToCategoryView() {
         let categoryView = UIStoryboard(name: "CategorySelectionView", bundle: nil)
         let categoryVC = categoryView.instantiateViewController(withIdentifier: "CategorySelectionView") as! CategorySelectionViewController
-
-        categoryVC.onCategorySelected = { [weak self] selectedCategory in
-            self?.selectedCategory = selectedCategory
-            self?.categoryLabel.text = selectedCategory.rawValue
-        }
-
+        categoryVC.viewModel = viewModel
         navigationController?.pushViewController(categoryVC, animated: true)
     }
 
@@ -88,6 +87,6 @@ class InputViewController: UIViewController {
     }
 
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
-        selectedDueDate = sender.date
+        viewModel.selectedDueDate = sender.date
     }
 }

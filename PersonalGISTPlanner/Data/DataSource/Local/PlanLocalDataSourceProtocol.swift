@@ -11,4 +11,5 @@ protocol PlanLocalDataSourceProtocol {
     func insertPlan(_ plan: Plan)
     func updatePlan(_ plan: Plan)
     func deletePlan(id: Int)
+    func clearAllPlans()
 }
