@@ -49,7 +49,7 @@ class CategorySelectionViewController: UIViewController, UITableViewDelegate, UI
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCategory = PlanCategory.allCases[indexPath.row]
 
-        if selectedCategory == .goal {
+        if selectedCategory == .goal || selectedCategory == .none {
             viewModel.selectedCategory = selectedCategory
             navigationController?.popViewController(animated: true)
         } else {
