@@ -174,6 +174,10 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let itemView = UIStoryboard(name: "CategorizedListView", bundle: nil)
         if let targetVC = itemView.instantiateViewController(withIdentifier: "CategorizedListView") as? CategorizedListViewController {
+            targetVC.goalsVM = viewModel
+            targetVC.vm.selectedItem = indexPath.section == 0
+                ? viewModel.activeGoals?[indexPath.row]
+                : viewModel.completedGoals?[indexPath.row]
             navigationController?.pushViewController(targetVC, animated: true)
         }
     }
