@@ -9,7 +9,7 @@ import Combine
 import Foundation
 import RealmSwift
 
-class CategorizedListViewModel {
+class CategorizedListViewModel: ObservableObject {
     private let localDataSource: PlanLocalDataSourceProtocol
     private(set) var plans: Results<Plan>?
 
@@ -46,5 +46,12 @@ class CategorizedListViewModel {
         let allSteps = fetchPlans(.task)
         guard let itemId = selectedItem?.id else { return }
         items = allSteps?.filter("stepId == %@", itemId)
+    }
+
+    func toggleTaskCompletion(_ task: Plan) {
+        objectWillChange.send()
+        localDataSource.updatePlan(task) { plan in
+            plan.isCompleted.toggle()
+        }
     }
 }

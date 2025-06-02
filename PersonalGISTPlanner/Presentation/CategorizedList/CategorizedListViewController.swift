@@ -49,7 +49,7 @@ class CategorizedListViewController: UIViewController, UITableViewDelegate, UITa
     // MARK: - SETUP
 
     private func setupBinding() {
-        vm.$items
+        vm.objectWillChange
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.tableView.reloadData()
@@ -71,7 +71,16 @@ class CategorizedListViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "categorizedItemCell") as! CategorizedItemCell
 
+        if let item = vm.items?[indexPath.row] {
+            cell.checkMark.image = UIImage(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
+        } else {
+            cell.checkMark.image = UIImage(systemName: "circle")
+        }
+
         cell.contentText.text = vm.items?[indexPath.row].title
+        if category != .step {
+            cell.checkMark.isHidden = true
+        }
 
         return cell
     }
@@ -82,7 +91,14 @@ class CategorizedListViewController: UIViewController, UITableViewDelegate, UITa
             targetVC.goalsVM = goalsVM
             targetVC.category = vm.items?[indexPath.row].category ?? .idea
             targetVC.vm.selectedItem = vm.items?[indexPath.row]
-            navigationController?.pushViewController(targetVC, animated: true)
+
+            if category == .step {
+                if let plan = vm.items?[indexPath.row] {
+                    vm.toggleTaskCompletion(plan)
+                }
+            } else {
+                navigationController?.pushViewController(targetVC, animated: true)
+            }
         }
     }
 }

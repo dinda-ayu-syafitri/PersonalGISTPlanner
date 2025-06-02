@@ -24,8 +24,14 @@ class PlanLocalDataSource: PlanLocalDataSourceProtocol {
         }
     }
 
-    func updatePlan(_ plan: Plan) {
-        // TODO: Update Plan
+    func updatePlan(_ plan: Plan, updateBlock: (Plan) -> Void) {
+        do {
+            try realm?.write {
+                updateBlock(plan)
+            }
+        } catch {
+            print("Error updating plan: \(error)")
+        }
     }
 
     func deletePlan(id: Int) {
