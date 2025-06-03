@@ -192,10 +192,12 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="completeGoalLabel" destination="YUG-Lm-o9i" id="Pcl-cY-ppC"/>
                         <outlet property="goalActiveView" destination="pC5-g8-i3W" id="QA5-a0-BbO"/>
                         <outlet property="goalCountLabel" destination="Yz1-7G-vra" id="h2Q-uf-4b1"/>
                         <outlet property="taskCompleteProgress" destination="VJW-m8-ctY" id="nPV-oq-mO7"/>
                         <outlet property="taskCompleteView" destination="ukh-Q7-aFW" id="wja-0L-QKV"/>
+                        <outlet property="totalGoalLabel" destination="kwF-bF-uHW" id="C9B-B6-RPT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
