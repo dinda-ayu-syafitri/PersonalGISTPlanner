@@ -144,7 +144,12 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "goalItemCell", for: indexPath) as! GoalItemCell
 
-        cell.progressView.progress = 0.8
+        guard let goalId = viewModel.activeGoals?[indexPath.row].id else { return cell }
+
+        let progress = Float(viewModel.countCompleteTask(for: goalId)) / Float(viewModel.fetchRelatedTask(goalId)?.count ?? 0)
+
+        cell.progressView.progress = viewModel.fetchRelatedTask(goalId)?.count == 0 ? 0 : progress
+        cell.progressText.text = "\(viewModel.countCompleteTask(for: goalId))/\(viewModel.fetchRelatedTask(goalId)?.count ?? 0) Task Completed"
         cell.title.numberOfLines = 0
 
         if indexPath.section == 0 {

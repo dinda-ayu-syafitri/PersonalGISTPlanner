@@ -31,4 +31,21 @@ class GoalsViewModel {
         activeGoals = goals.filter("isCompleted == %@", false)
         completedGoals = goals.filter("isCompleted == %@", true)
     }
+
+    func fetchRelatedTask(_ goalId: UUID) -> Results<Plan>? {
+        guard let allPlans = localDataSource.getAllPlans() else {
+            return nil
+        }
+
+        let tasks = allPlans.filter("category == %@", PlanCategory.task.rawValue)
+        let relatedTasks = tasks.filter("goalId == %@", goalId)
+        return relatedTasks
+    }
+
+    func countCompleteTask(for goalId: UUID) -> Int {
+        guard let relatedTasks = fetchRelatedTask(goalId) else {
+            return 0
+        }
+        return relatedTasks.filter("isCompleted == %@", true).count
+    }
 }

@@ -64,7 +64,6 @@ class DashboardViewController: UIViewController {
             ? CGFloat(viewModel.completedTask) / CGFloat(viewModel.totalTask)
             : 0
 
-        print("===== progress: \(progress) ====")
         taskCompleteProgress.setProgress(progress)
     }
 }
