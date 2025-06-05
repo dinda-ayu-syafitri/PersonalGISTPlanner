@@ -75,7 +75,7 @@ class CategorizedListViewController: UIViewController, UITableViewDelegate, UITa
             if item.category == .task {
                 cell.checkMark.image = UIImage(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
             }
-            cell.backgroundColor = vm.isComplete(for: item.id, category: item.category) ? .lightGreen : .lightBlueAccent
+            cell.backgroundColor = vm.isComplete(for: item.id, category: item.category, plan: item) ? .lightGreen : .lightBlueAccent
         } else {
             cell.checkMark.image = UIImage(systemName: "circle")
         }

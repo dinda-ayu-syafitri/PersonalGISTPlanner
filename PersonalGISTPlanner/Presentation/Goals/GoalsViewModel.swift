@@ -48,4 +48,25 @@ class GoalsViewModel {
         }
         return relatedTasks.filter("isCompleted == %@", true).count
     }
+
+//    func isComplete(for id: UUID, plan: Plan) -> Bool {
+//        guard let allPlans = localDataSource.getAllPlans() else {
+//            return false
+//        }
+//
+//        let relatedTasksCount = fetchRelatedTask(id)?.count
+//        let completeTask = countCompleteTask(for: id)
+//
+//        if relatedTasksCount == 0 || completeTask == 0 {
+//            return false
+//        }
+//
+//        if relatedTasksCount == completeTask {
+//            localDataSource.updatePlan(plan) { plan in
+//                plan.isCompleted.toggle()
+//            }
+//        }
+//
+//        return relatedTasksCount == completeTask
+//    }
 }

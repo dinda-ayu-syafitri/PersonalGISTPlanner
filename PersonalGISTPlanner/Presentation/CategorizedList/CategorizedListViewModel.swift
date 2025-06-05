@@ -71,8 +71,59 @@ class CategorizedListViewModel: ObservableObject {
         items = allSteps?.filter("stepId == %@", itemId)
     }
 
+    func getGoalById(id: UUID) -> Plan? {
+        let allGoals = fetchPlans(.goal)
+        let goal = allGoals?.filter("id == %@", id)
+        return goal?.first
+    }
+
+    func fetchRelatedTask(_ goalId: UUID) -> Results<Plan>? {
+        guard let allPlans = localDataSource.getAllPlans() else {
+            return nil
+        }
+
+        let tasks = allPlans.filter("category == %@", PlanCategory.task.rawValue)
+        let relatedTasks = tasks.filter("goalId == %@", goalId)
+        return relatedTasks
+    }
+
+    func countCompleteTask(for goalId: UUID) -> Int {
+        guard let relatedTasks = fetchRelatedTask(goalId) else {
+            return 0
+        }
+        return relatedTasks.filter("isCompleted == %@", true).count
+    }
+
+    func isCompleteGoal(for id: UUID, plan: Plan) -> Bool {
+        guard let allPlans = localDataSource.getAllPlans() else {
+            return false
+        }
+
+        let relatedTasksCount = fetchRelatedTask(id)?.count
+        let completeTask = countCompleteTask(for: id)
+
+        if relatedTasksCount == 0 || completeTask == 0 {
+            return false
+        }
+
+        if relatedTasksCount == completeTask {
+            localDataSource.updatePlan(plan) { plan in
+                plan.isCompleted.toggle()
+            }
+        }
+
+        return relatedTasksCount == completeTask
+    }
+
     func toggleTaskCompletion(_ task: Plan) {
         localDataSource.updatePlan(task) { plan in
+            plan.isCompleted.toggle()
+        }
+
+        guard let taskGoalId = task.goalId else { return }
+        guard let goal = getGoalById(id: taskGoalId) else { return }
+
+        localDataSource.updatePlan(goal) { plan in
             plan.isCompleted.toggle()
         }
     }
@@ -86,7 +137,7 @@ class CategorizedListViewModel: ObservableObject {
         return tasks
     }
 
-    func isComplete(for id: UUID, category: PlanCategory) -> Bool {
+    func isComplete(for id: UUID, category: PlanCategory, plan: Plan) -> Bool {
         guard let allPlans = localDataSource.getAllPlans() else {
             return false
         }
@@ -110,6 +161,12 @@ class CategorizedListViewModel: ObservableObject {
 
         if relatedTasksCount == 0 || completeTask == 0 {
             return false
+        }
+
+        if relatedTasksCount == completeTask {
+            localDataSource.updatePlan(plan) { plan in
+                plan.isCompleted.toggle()
+            }
         }
 
         return relatedTasksCount == completeTask

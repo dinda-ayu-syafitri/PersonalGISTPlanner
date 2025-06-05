@@ -99,12 +99,14 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func setupBindings() {
         viewModel.$activeGoals
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in self?.goalTableView.reloadSections(IndexSet(integer: 0), with: .automatic) }
+            .sink { [weak self] _ in self?.goalTableView.reloadData()
+            }
             .store(in: &cancellables)
 
         viewModel.$completedGoals
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in self?.goalTableView.reloadSections(IndexSet(integer: 1), with: .automatic) }
+            .sink { [weak self] _ in self?.goalTableView.reloadData()
+            }
             .store(in: &cancellables)
     }
 
@@ -115,12 +117,14 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        switch section {
+        case 0:
             return viewModel.activeGoals?.count ?? 0
-        } else if section == 1 {
+        case 1:
             return viewModel.completedGoals?.count ?? 0
+        default:
+            return 0
         }
-        return 0
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -144,19 +148,29 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "goalItemCell", for: indexPath) as! GoalItemCell
 
-        guard let goalId = viewModel.activeGoals?[indexPath.row].id else { return cell }
-
-        let progress = Float(viewModel.countCompleteTask(for: goalId)) / Float(viewModel.fetchRelatedTask(goalId)?.count ?? 0)
-
-        cell.progressView.progress = viewModel.fetchRelatedTask(goalId)?.count == 0 ? 0 : progress
-        cell.progressText.text = "\(viewModel.countCompleteTask(for: goalId))/\(viewModel.fetchRelatedTask(goalId)?.count ?? 0) Task Completed"
-        cell.title.numberOfLines = 0
-
-        if indexPath.section == 0 {
-            cell.title.text = viewModel.activeGoals?[indexPath.row].title
-        } else if indexPath.section == 1 {
-            cell.title.text = viewModel.completedGoals?[indexPath.row].title
+        let plan: Plan?
+        switch indexPath.section {
+        case 0:
+            plan = viewModel.activeGoals?[indexPath.row]
+        case 1:
+            plan = viewModel.completedGoals?[indexPath.row]
+        default:
+            plan = nil
         }
+
+        guard let item = plan else { return cell }
+
+        let goalId = item.id
+        let relatedTasks = viewModel.fetchRelatedTask(goalId)
+        let completedTaskCount = viewModel.countCompleteTask(for: goalId)
+        let totalTaskCount = relatedTasks?.count ?? 0
+
+        let progress: Float = totalTaskCount == 0 ? 0 : Float(completedTaskCount) / Float(totalTaskCount)
+
+        cell.title.text = item.title
+        cell.title.numberOfLines = 0
+        cell.progressView.progress = progress
+        cell.progressText.text = "\(completedTaskCount)/\(totalTaskCount) Task Completed"
 
         return cell
     }
