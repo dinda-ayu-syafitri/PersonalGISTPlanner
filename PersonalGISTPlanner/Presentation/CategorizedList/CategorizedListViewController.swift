@@ -72,7 +72,10 @@ class CategorizedListViewController: UIViewController, UITableViewDelegate, UITa
         let cell = tableView.dequeueReusableCell(withIdentifier: "categorizedItemCell") as! CategorizedItemCell
 
         if let item = vm.items?[indexPath.row] {
-            cell.checkMark.image = UIImage(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
+            if item.category == .task {
+                cell.checkMark.image = UIImage(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
+            }
+            cell.backgroundColor = vm.isComplete(for: item.id, category: item.category) ? .lightGreen : .lightBlueAccent
         } else {
             cell.checkMark.image = UIImage(systemName: "circle")
         }

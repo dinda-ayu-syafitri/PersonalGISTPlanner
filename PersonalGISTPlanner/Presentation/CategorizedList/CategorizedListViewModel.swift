@@ -12,12 +12,35 @@ import RealmSwift
 class CategorizedListViewModel: ObservableObject {
     private let localDataSource: PlanLocalDataSourceProtocol
     private(set) var plans: Results<Plan>?
+    private var taskNotificationToken: NotificationToken?
 
     @Published var items: Results<Plan>?
     @Published var selectedItem: Plan?
 
     init(localDataSource: PlanLocalDataSourceProtocol = PlanLocalDataSource()) {
         self.localDataSource = localDataSource
+        observeTaskChanges()
+    }
+
+    deinit {
+        taskNotificationToken?.invalidate()
+    }
+
+    private func observeTaskChanges() {
+        guard let tasks = fetchAllTask() else { return }
+
+        taskNotificationToken = tasks.observe { [weak self] changes in
+            switch changes {
+            case .initial:
+                break
+            case .update:
+                DispatchQueue.main.async {
+                    self?.objectWillChange.send()
+                }
+            case .error(let error):
+                print("Task observation error: \(error)")
+            }
+        }
     }
 
     func fetchPlans(_ category: PlanCategory) -> Results<Plan>? {
@@ -49,9 +72,46 @@ class CategorizedListViewModel: ObservableObject {
     }
 
     func toggleTaskCompletion(_ task: Plan) {
-        objectWillChange.send()
         localDataSource.updatePlan(task) { plan in
             plan.isCompleted.toggle()
         }
+    }
+
+    func fetchAllTask() -> Results<Plan>? {
+        guard let allPlans = localDataSource.getAllPlans() else {
+            return nil
+        }
+
+        let tasks = allPlans.filter("category == %@", PlanCategory.task.rawValue)
+        return tasks
+    }
+
+    func isComplete(for id: UUID, category: PlanCategory) -> Bool {
+        guard let allPlans = localDataSource.getAllPlans() else {
+            return false
+        }
+
+        let tasks = allPlans.filter("category == %@", PlanCategory.task.rawValue)
+        var relatedTasksCount = 0
+        var completeTask = 0
+
+        if category == .idea {
+            let relatedTasks = tasks.filter("ideaId == %@", id)
+            relatedTasksCount = relatedTasks.count
+            completeTask = relatedTasks.filter("isCompleted == %@", true).count
+        } else if category == .step {
+            let relatedTasks = tasks.filter("stepId == %@", id)
+            relatedTasksCount = relatedTasks.count
+            completeTask = relatedTasks.filter("isCompleted == %@", true).count
+
+        } else {
+            return true
+        }
+
+        if relatedTasksCount == 0 || completeTask == 0 {
+            return false
+        }
+
+        return relatedTasksCount == completeTask
     }
 }
