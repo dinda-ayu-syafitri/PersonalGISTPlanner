@@ -34,8 +34,14 @@ class PlanLocalDataSource: PlanLocalDataSourceProtocol {
         }
     }
 
-    func deletePlan(id: Int) {
-        // TODO: Delete Plan
+    func deletePlan(plan: Plan) {
+        do {
+            try realm?.write {
+                realm?.delete(plan)
+            }
+        } catch {
+            print("Error deleting plan: \(error)")
+        }
     }
 
     func clearAllPlans() {

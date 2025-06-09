@@ -49,6 +49,28 @@ class GoalsViewModel {
         return relatedTasks.filter("isCompleted == %@", true).count
     }
 
+    func fetchRelatedItems(_ goalId: UUID) -> Results<Plan>? {
+        guard let allPlans = localDataSource.getAllPlans() else {
+            return nil
+        }
+
+        let relatedItems = allPlans.filter("goalId == %@", goalId)
+        return relatedItems
+    }
+
+    func deleteGoal(plan: Plan) {
+        let planID = plan.id
+
+        localDataSource.deletePlan(plan: plan)
+
+        let relatedItems = fetchRelatedItems(planID)!
+        for item in relatedItems {
+            localDataSource.deletePlan(plan: item)
+        }
+
+        fetchGoals()
+    }
+
 //    func isComplete(for id: UUID, plan: Plan) -> Bool {
 //        guard let allPlans = localDataSource.getAllPlans() else {
 //            return false

@@ -176,10 +176,25 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .normal, title: "Delete") {
-            _, _, _ in
+        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { _, _, _ in
+            let plan: Plan?
 
-            print("Delete ACTION")
+            switch indexPath.section {
+            case 0:
+                plan = self.viewModel.activeGoals?[indexPath.row]
+            case 1:
+                plan = self.viewModel.completedGoals?[indexPath.row]
+            default:
+                plan = nil
+            }
+
+            guard let plan = plan else { return }
+
+            let planID = plan.id
+
+            self.viewModel.deleteGoal(plan: plan)
+
+            print("Deleted plan with ID: \(planID)")
         }
 
         deleteAction.backgroundColor = .clear

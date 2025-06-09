@@ -10,6 +10,6 @@ protocol PlanLocalDataSourceProtocol {
     func getAllPlans() -> Results<Plan>?
     func insertPlan(_ plan: Plan)
     func updatePlan(_ plan: Plan, updateBlock: (Plan) -> Void)
-    func deletePlan(id: Int)
+    func deletePlan(plan: Plan)
     func clearAllPlans()
 }
