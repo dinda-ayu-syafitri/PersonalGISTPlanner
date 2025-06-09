@@ -95,10 +95,6 @@ class CategorizedListViewModel: ObservableObject {
     }
 
     func isCompleteGoal(for id: UUID, plan: Plan) -> Bool {
-        guard let allPlans = localDataSource.getAllPlans() else {
-            return false
-        }
-
         let relatedTasksCount = fetchRelatedTask(id)?.count
         let completeTask = countCompleteTask(for: id)
 

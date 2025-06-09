@@ -25,6 +25,6 @@ class PlanRepository: PlanRepositoryProtocol {
     }
 
     func addPlan(_ plan: Plan) {
-        let localData = planLocalData.insertPlan(plan)
+        planLocalData.insertPlan(plan)
     }
 }
