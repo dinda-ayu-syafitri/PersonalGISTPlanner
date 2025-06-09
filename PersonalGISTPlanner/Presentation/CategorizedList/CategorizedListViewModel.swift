@@ -167,4 +167,39 @@ class CategorizedListViewModel: ObservableObject {
 
         return relatedTasksCount == completeTask
     }
+
+    func fetchRelatedItems(_ id: UUID, _ category: PlanCategory) -> Results<Plan>? {
+        guard let allPlans = localDataSource.getAllPlans() else {
+            return nil
+        }
+        var relatedItems: Results<Plan>?
+        if category == .idea {
+            relatedItems = allPlans.filter("ideaId == %@", id)
+        } else if category == .step {
+            relatedItems = allPlans.filter("stepId == %@", id)
+        } else {
+            relatedItems = allPlans.filter("taskId == %@", id)
+        }
+        return relatedItems
+    }
+
+    func deleteGoal(plan: Plan) {
+        let planID = plan.id
+        let planCategory = plan.category
+
+        localDataSource.deletePlan(plan: plan)
+
+        let relatedItems = fetchRelatedItems(planID, planCategory)!
+        for item in relatedItems {
+            localDataSource.deletePlan(plan: item)
+        }
+
+        if selectedItem?.category == .idea {
+            fetchIdeas()
+        } else if selectedItem?.category == .step {
+            fetchSteps()
+        } else {
+            fetchTasks()
+        }
+    }
 }

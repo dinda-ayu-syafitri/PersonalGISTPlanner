@@ -88,6 +88,29 @@ class CategorizedListViewController: UIViewController, UITableViewDelegate, UITa
         return cell
     }
 
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { _, _, _ in
+            let plan: Plan?
+
+            plan = self.vm.items?[indexPath.row]
+
+            guard let plan = plan else { return }
+
+            let planID = plan.id
+
+            self.vm.deleteGoal(plan: plan)
+
+            print("Deleted plan with ID: \(planID)")
+        }
+
+        deleteAction.backgroundColor = .clear
+
+        let swipeConfiguration = UISwipeActionsConfiguration(actions: [deleteAction])
+        swipeConfiguration.performsFirstActionWithFullSwipe = false
+
+        return swipeConfiguration
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let itemView = UIStoryboard(name: "CategorizedListView", bundle: nil)
         if let targetVC = itemView.instantiateViewController(withIdentifier: "CategorizedListView") as? CategorizedListViewController {
