@@ -55,6 +55,10 @@ class InputViewController: UIViewController {
         submitButton.addTarget(self, action: #selector(submit), for: .touchUpInside)
 
         dueDatePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+
+        let tapToDismissKeyboard = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        tapToDismissKeyboard.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapToDismissKeyboard)
     }
 
     // MARK: - UPDATE
