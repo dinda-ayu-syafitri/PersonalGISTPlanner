@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,14 +17,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plan Basket" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BBw-8H-kpc">
-                                <rect key="frame" x="20" y="103" width="353" height="33.666666666666657"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sub-Mo-VkG">
+                                <rect key="frame" x="20" y="123" width="353" height="29"/>
+                                <subviews>
+                                    <searchBar contentMode="scaleToFill" text="" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="iej-18-dLH">
+                                        <rect key="frame" x="0.0" y="0.0" width="307" height="29"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <scopeButtonTitles>
+                                            <string>Title</string>
+                                            <string>Title</string>
+                                        </scopeButtonTitles>
+                                    </searchBar>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line.3.horizontal.decrease.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="859-YD-qk2">
+                                        <rect key="frame" x="324" y="0.66666666666666607" width="29" height="27.666666666666671"/>
+                                        <color key="tintColor" name="blueAccent"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="29" id="WZn-8a-yja"/>
+                                            <constraint firstAttribute="width" constant="29" id="wIB-fn-4Yv"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Wv2-nB-6fH">
-                                <rect key="frame" x="20" y="166.66666666666669" width="353" height="651.33333333333326"/>
+                                <rect key="frame" x="20" y="182" width="353" height="636"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PlanBasketCell" id="apj-Y1-aJI" customClass="PlanBasketCell" customModule="PersonalGISTPlanner" customModuleProvider="target">
@@ -70,17 +86,18 @@
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Wv2-nB-6fH" firstAttribute="top" secondItem="Sub-Mo-VkG" secondAttribute="bottom" constant="30" id="37f-lf-5Dx"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Wv2-nB-6fH" secondAttribute="trailing" constant="20" id="BJc-Xc-sNH"/>
-                            <constraint firstItem="Wv2-nB-6fH" firstAttribute="top" secondItem="BBw-8H-kpc" secondAttribute="bottom" constant="30" id="N6Z-uv-8UR"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="BBw-8H-kpc" secondAttribute="trailing" constant="20" id="Ram-b0-PDq"/>
-                            <constraint firstItem="BBw-8H-kpc" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="iJV-ku-feh"/>
+                            <constraint firstItem="Sub-Mo-VkG" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="Jjb-1C-kRM"/>
                             <constraint firstItem="Wv2-nB-6fH" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="jGA-sM-Ja4"/>
+                            <constraint firstItem="Sub-Mo-VkG" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="20" id="jgK-sb-lEO"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="Wv2-nB-6fH" secondAttribute="bottom" id="tFm-xG-ORF"/>
-                            <constraint firstItem="BBw-8H-kpc" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="veT-z7-AXv"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Sub-Mo-VkG" secondAttribute="trailing" constant="20" id="uzf-st-sqM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="EAG-fh-Bi0"/>
                     <connections>
+                        <outlet property="searchBar" destination="iej-18-dLH" id="oMK-xq-Vpa"/>
                         <outlet property="tableView" destination="Wv2-nB-6fH" id="ocg-Tg-flW"/>
                     </connections>
                 </viewController>
@@ -109,6 +126,10 @@
     </scenes>
     <resources>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
+        <image name="line.3.horizontal.decrease.circle.fill" catalog="system" width="128" height="123"/>
+        <namedColor name="blueAccent">
+            <color red="0.078431372549019607" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

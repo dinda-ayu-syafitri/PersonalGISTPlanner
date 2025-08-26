@@ -28,4 +28,10 @@ class PlanBasketViewModel: ObservableObject {
         let filtered = allPlans.filter("category == %@", PlanCategory.none.rawValue)
         items = filtered
     }
+
+    func fetchPlansByKeyword(_ keyword: String) {
+        fetchUncategorizedPlans()
+        let filtered = items?.filter("title CONTAINS[cd] %@", keyword)
+        items = filtered
+    }
 }

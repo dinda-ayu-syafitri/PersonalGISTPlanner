@@ -13,8 +13,9 @@ class PlanBasketCell: UITableViewCell {
     @IBOutlet var chevronIcon: UIImageView!
 }
 
-class PlanBasketViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PlanBasketViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var searchBar: UISearchBar!
 
     let vm = PlanBasketViewModel()
     var cancellables = Set<AnyCancellable>()
@@ -25,6 +26,7 @@ class PlanBasketViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        searchBar.delegate = self
 
         vm.fetchUncategorizedPlans()
 
@@ -48,5 +50,12 @@ class PlanBasketViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.itemText.text = vm.items?[indexPath.row].title
 
         return cell
+    }
+
+    // MARK: - SEARCH BAR DELEGATE
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        vm.fetchPlansByKeyword(searchText)
+        tableView.reloadData()
     }
 }
