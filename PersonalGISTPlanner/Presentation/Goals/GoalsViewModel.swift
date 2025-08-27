@@ -32,6 +32,15 @@ class GoalsViewModel {
         completedGoals = goals.filter("isCompleted == %@", true)
     }
 
+    func fetchPlansByKeyword(_ keyword: String) {
+        fetchGoals()
+        let filteredActiveGoals = activeGoals?.filter("title CONTAINS[cd] %@", keyword)
+        let filteredCompletedGoals = completedGoals?.filter("title CONTAINS[cd] %@", keyword)
+
+        activeGoals = filteredActiveGoals
+        completedGoals = filteredCompletedGoals
+    }
+
     func fetchRelatedTask(_ goalId: UUID) -> Results<Plan>? {
         guard let allPlans = localDataSource.getAllPlans() else {
             return nil

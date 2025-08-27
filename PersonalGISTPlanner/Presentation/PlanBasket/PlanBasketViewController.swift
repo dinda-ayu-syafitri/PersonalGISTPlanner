@@ -36,6 +36,16 @@ class PlanBasketViewController: UIViewController, UITableViewDelegate, UITableVi
                 self?.tableView.reloadData()
             }
             .store(in: &cancellables)
+
+        setupGestureRecognizers()
+    }
+
+    // MARK: - SETUP
+
+    private func setupGestureRecognizers() {
+        let tapToDismissKeyboard = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        tapToDismissKeyboard.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapToDismissKeyboard)
     }
 
     // MARK: - TABLE CONFIG
@@ -55,7 +65,12 @@ class PlanBasketViewController: UIViewController, UITableViewDelegate, UITableVi
     // MARK: - SEARCH BAR DELEGATE
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        vm.fetchPlansByKeyword(searchText)
+        if searchText.isEmpty {
+            vm.fetchUncategorizedPlans()
+        } else {
+            vm.fetchPlansByKeyword(searchText)
+        }
+
         tableView.reloadData()
     }
 }

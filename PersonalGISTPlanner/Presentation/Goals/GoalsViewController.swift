@@ -70,8 +70,9 @@ class GoalItemCell: UITableViewCell {
     }
 }
 
-class GoalViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class GoalViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     @IBOutlet var goalTableView: UITableView!
+    @IBOutlet var searchBar: UISearchBar!
 
     let category: [String] = [
         "Active Goals",
@@ -88,6 +89,7 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
         goalTableView.rowHeight = UITableView.automaticDimension
         goalTableView.estimatedRowHeight = 100
         setupBindings()
+        setupGestureRecognizers()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -108,6 +110,12 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
             .sink { [weak self] _ in self?.goalTableView.reloadData()
             }
             .store(in: &cancellables)
+    }
+
+    private func setupGestureRecognizers() {
+        let tapToDismissKeyboard = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        tapToDismissKeyboard.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapToDismissKeyboard)
     }
 
     // MARK: - TABLE CONFIG
@@ -214,5 +222,17 @@ class GoalViewController: UIViewController, UITableViewDelegate, UITableViewData
                 : viewModel.completedGoals?[indexPath.row]
             navigationController?.pushViewController(targetVC, animated: true)
         }
+    }
+
+    // MARK: - SEARCH BAR DELEGATE
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            viewModel.fetchGoals()
+        } else {
+            viewModel.fetchPlansByKeyword(searchText)
+        }
+
+        goalTableView.reloadData()
     }
 }

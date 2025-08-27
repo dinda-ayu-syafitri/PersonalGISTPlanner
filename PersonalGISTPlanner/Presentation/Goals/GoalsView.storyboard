@@ -104,6 +104,7 @@
                     <navigationItem key="navigationItem" id="JpB-e3-uTv"/>
                     <connections>
                         <outlet property="goalTableView" destination="G4v-tT-d2F" id="a5u-kH-Fdw"/>
+                        <outlet property="searchBar" destination="C3x-jb-3n3" id="SlG-X2-k4Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
